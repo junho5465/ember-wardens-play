@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102d2b">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="숲의 정령들과 여덟 자리를 지키는 불씨 방어 게임">
+  <title>숲의 불씨 · 정령 수호대</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#gameCanvas">전장으로 바로 가기</a>
+  <main class="game-shell" aria-label="숲의 불씨 게임">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 38" fill="none"><path d="M17 2c2 9-5 10-4 17 3-2 5-5 6-8 7 7 12 16 5 22-9 8-23-1-19-11 2-5 5-7 7-11-1 7 1 8 1 8-1-7 7-9 4-17Z" fill="currentColor"/><path d="M17 22c4 4 6 7 2 10-5 3-10-1-7-5 1-2 3-3 5-5Z" fill="#fff1c4"/></svg></span>
+        <div><p class="eyebrow">FOREST KEEPERS</p><h1>숲의 불씨</h1></div>
+      </div>
+      <nav class="utility-controls" aria-label="게임 설정">
+        <button id="soundBtn" class="utility-button" type="button" aria-label="게임 소리 설정" title="게임 소리 설정">소리</button>
+        <button id="speedBtn" class="utility-button speed-button" type="button" aria-label="게임 속도 변경" title="게임 속도 변경">1×</button>
+        <button id="pauseBtn" class="utility-button pause-button" type="button" aria-label="일시정지 및 설정" title="일시정지 및 설정"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4v12M14 4v12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span class="sr-only">일시정지</span></button>
+      </nav>
+    </header>
+
+    <section class="battle-hud" aria-label="현재 전투 정보">
+      <div class="hud-topline"><span id="stageName" class="stage-name">고요한 숲</span><span class="wave-label">WAVE <strong id="waveValue">1</strong></span></div>
+      <div class="health-line"><span class="health-label">불씨 생명</span><div class="health-track" aria-hidden="true"><div id="hpFill" class="health-fill" style="width:100%"></div></div><strong id="hpValue" class="health-value" aria-live="off">100</strong></div>
+      <div class="resource-row"><span class="resource"><i class="coin-mark" aria-hidden="true"></i><span class="sr-only">보유 도토리</span><strong id="coinsValue">0</strong></span><span class="resource score-resource">점수 <strong id="scoreValue">0</strong></span><span class="resource combo-resource">연속 <strong id="comboValue">0</strong></span></div>
+    </section>
+
+    <section class="battle-section" aria-label="불씨 방어 전장">
+      <div id="battlefield" class="battlefield">
+        <canvas id="gameCanvas" width="600" height="760" tabindex="0" aria-label="숲의 불씨 방어 전장" aria-describedby="battlefieldHint">숲의 불씨 방어 전장입니다. 아래 회전 버튼과 전투 기술 버튼을 이용해 플레이하세요.</canvas>
+        <div id="bubbles" class="bubbles" aria-hidden="true"></div>
+        <div class="battle-corners" aria-hidden="true"></div>
+      </div>
+      <div class="wave-status"><span id="statusText" role="status" aria-live="polite">숲의 정령들과 불씨를 지켜요</span><div class="wave-track" aria-label="웨이브 진행"><div id="waveProgress" class="wave-fill" style="width:0%"></div></div></div>
+    </section>
+
+    <section class="combat-controls" aria-label="회전 및 전투 기술">
+      <div class="rotation-controls" role="group" aria-label="수호대 회전">
+        <button id="rotateLeft" class="rotate-button" type="button" aria-label="수호대 왼쪽 회전"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5-7 7 7 7M4 12h16"/></svg></button>
+        <button id="rotateRight" class="rotate-button" type="button" aria-label="수호대 오른쪽 회전"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5 7 7-7 7M20 12H4"/></svg></button>
+      </div>
+      <button id="supportBtn" class="skill-button support-button" type="button" aria-label="전투 기술: 정령의 가호"><span class="skill-symbol" aria-hidden="true">✦</span><span class="label">정령의 가호</span><span class="cooldown" aria-live="off"></span></button>
+      <button id="burstBtn" class="skill-button burst-button" type="button" aria-label="전투 기술: 불씨 폭발"><span class="skill-symbol burst-symbol" aria-hidden="true">✧</span><span class="label">불씨 폭발</span><span class="cooldown" aria-live="off"></span></button>
+    </section>
+
+    <section class="roster-section" aria-label="정령 수호대">
+      <div class="section-heading"><h2>정령 수호대</h2><span class="roster-caption">여덟 자리, 하나의 불씨</span></div>
+      <div id="unitRoster" class="unit-roster" aria-label="정령 목록"></div>
+      <p id="battlefieldHint" class="game-hint">좌우로 회전해 정령의 자리를 바꾸세요.<br class="small-break"> 정령을 선택하면 능력을 확인할 수 있어요.</p>
+    </section>
+    <footer class="game-footer"><span class="demo-label">광고 테스트 모드</span><span>실제 광고가 표시되지 않습니다.</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="modal" class="modal" hidden><section id="modalContent" class="modal-card" role="dialog" aria-modal="true" aria-label="게임 안내"></section></div>
+  <script>window.EMBER_CONFIG={adMode:'demo',rewardedAdGroupId:'',qaEnabled: location.hostname==='localhost'||location.hostname==='127.0.0.1'};</script>
+  <script src="state.js"></script>
+  <script src="rewarded.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
